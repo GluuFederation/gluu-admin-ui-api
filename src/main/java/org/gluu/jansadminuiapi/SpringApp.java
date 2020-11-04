@@ -1,4 +1,4 @@
-package org.gluu.adminapi;
+package org.gluu.jansadminuiapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

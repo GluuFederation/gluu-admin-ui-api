@@ -1,4 +1,4 @@
-package org.gluu.adminapi;
+package org.gluu.jansadminuiapi;
 
 import org.springframework.web.bind.annotation.GetMapping;
 

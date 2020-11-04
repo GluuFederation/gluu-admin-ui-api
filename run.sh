@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This script creates and run the admin-api.
+# This script creates and run the jans-admin-ui-api.
 
 mvn clean package -DskipTests
 
@@ -9,7 +9,7 @@ rm -fr run
 mkdir -p run/plugins
 
 # copy artifacts to run folder
-cp target/admin-api-*-SNAPSHOT.zip run/
+cp target/jans-admin-ui-api-*-SNAPSHOT.zip run/
 cp plugins/test/target/test-plugin-*.zip run/plugins/
 cp plugins/enabled.txt run/plugins/
 cp plugins/disabled.txt run/plugins/
@@ -17,11 +17,11 @@ cp plugins/disabled.txt run/plugins/
 cd run
 
 # unzip app
-jar xf admin-api-*.zip
-rm admin-api-*.zip
+jar xf jans-admin-ui-api-*.zip
+rm jans-admin-ui-api-*.zip
 
 # start
-mv admin-api-*-SNAPSHOT.jar admin-api.jar
-java -jar admin-api.jar
+mv jans-admin-ui-api-*-SNAPSHOT.jar jans-admin-ui-api.jar
+java -jar jans-admin-ui-api.jar
 
 cd -

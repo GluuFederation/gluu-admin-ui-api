@@ -1,4 +1,4 @@
-package org.gluu.adminapi;
+package org.gluu.jansadminuiapi;
 
 import org.pf4j.PluginManager;
 import org.springframework.context.ApplicationContext;

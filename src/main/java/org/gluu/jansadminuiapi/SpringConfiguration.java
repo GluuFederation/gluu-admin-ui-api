@@ -1,9 +1,8 @@
-package org.gluu.adminapi;
+package org.gluu.jansadminuiapi;
 
 import org.pf4j.spring.SpringPluginManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 
 @Configuration
 public class SpringConfiguration {

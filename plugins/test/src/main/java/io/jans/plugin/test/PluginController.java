@@ -11,7 +11,7 @@ public class PluginController implements ExtensionPoint {
 
     @GetMapping("/plugin")
     public Object plugin() {
-        return String.format("%s : %d", "Test plugin working 3333333333 ... : ", System.currentTimeMillis());
+        return String.format("%s : %d", "Test plugin working... : ", System.currentTimeMillis());
     }
 
 }
