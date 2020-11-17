@@ -1,5 +1,6 @@
-package org.gluu.jansadminuiapi;
+package org.gluu.jansadminuiapi.controllers;
 
+import org.gluu.jansadminuiapi.SpringConfiguration;
 import org.pf4j.PluginManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
