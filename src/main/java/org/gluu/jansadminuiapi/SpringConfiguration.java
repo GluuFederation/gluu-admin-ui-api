@@ -26,8 +26,8 @@ public class SpringConfiguration {
         String clientSecret = "hJtZ4h36fTUe";
         String authzBaseUrl = "https://ce-ob.gluu.org/oxauth/authorize.htm";
         String scope = "openid+profile+email+user_name";
-        String redirectUrl = "http://localhost:4100/";
-        String logoutUrl = "http://localhost:4100/";
+        String redirectUrl = "https://ce-ob.gluu.org/admin-ui";
+        String logoutUrl = "https://ce-ob.gluu.org/admin-ui";
         String tokenEndpoint = "https://ce-ob.gluu.org/oxauth/restv1/token";
 
         return new AppConfiguration(new OAuth2(authzBaseUrl, clientId, clientSecret, scope, redirectUrl, logoutUrl, tokenEndpoint));
