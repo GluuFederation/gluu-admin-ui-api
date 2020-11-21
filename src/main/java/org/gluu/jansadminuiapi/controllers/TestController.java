@@ -22,5 +22,10 @@ public class TestController implements TestControllerInterface {
 
         return "pong";
     }
+    
+    public String testToken() {
+        System.out.println("test-token controller");
+        return "success";
+    }
 
 }

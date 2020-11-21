@@ -7,8 +7,11 @@ import org.gluu.jansadminuiapi.domain.types.config.IdPApi20;
 import org.gluu.jansadminuiapi.domain.types.config.OAuth2;
 import org.gluu.jansadminuiapi.services.AppConfiguration;
 import org.pf4j.spring.SpringPluginManager;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.Builder;
 
 @Configuration
 @Slf4j
@@ -29,8 +32,9 @@ public class SpringConfiguration {
         String redirectUrl = "https://ce-ob.gluu.org/admin-ui";
         String logoutUrl = "https://ce-ob.gluu.org/admin-ui";
         String tokenEndpoint = "https://ce-ob.gluu.org/oxauth/restv1/token";
+        String introspectionEndpoint = "https://ce-ob.gluu.org/oxauth/restv1/introspection";
 
-        return new AppConfiguration(new OAuth2(authzBaseUrl, clientId, clientSecret, scope, redirectUrl, logoutUrl, tokenEndpoint));
+        return new AppConfiguration(new OAuth2(authzBaseUrl, clientId, clientSecret, scope, redirectUrl, logoutUrl, tokenEndpoint, introspectionEndpoint));
     }
 
     /**
@@ -49,4 +53,11 @@ public class SpringConfiguration {
                 .build(new IdPApi20(oAuth2.getTokenEndpoint(), oAuth2.getAuthzBaseUrl()));
     }
 
+    @Bean
+    public WebClient introspectClient(AppConfiguration appConfiguration) {
+    	return WebClient.builder()
+    	    .baseUrl(appConfiguration.getOauth2().getIntrospectionEndpoint())
+    	    .build();
+    }
+    
 }

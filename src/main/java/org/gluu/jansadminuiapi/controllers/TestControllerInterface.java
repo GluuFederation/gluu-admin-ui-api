@@ -1,5 +1,6 @@
 package org.gluu.jansadminuiapi.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 
 public interface TestControllerInterface {
@@ -7,4 +8,8 @@ public interface TestControllerInterface {
     @GetMapping("ping")
     String ping();
 
+    @PreAuthorize("hasAuthority('dummy')")
+    @GetMapping("test-token")
+    String testToken();
+    
 }
