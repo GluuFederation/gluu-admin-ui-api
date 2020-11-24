@@ -1,17 +1,17 @@
 package org.gluu.jansadminuiapi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.gluu.jansadminuiapi.controllers.OAuth2ControllerInterface;
+import org.gluu.jansadminuiapi.services.external.IdPService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,13 +24,14 @@ import java.util.Collections;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
+@RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final IdPService idPService;
+    private final ObjectMapper objectMapper;
     
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -41,14 +42,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           4. Public and protected endpoints configuration.
          */
         httpSecurity
-				.addFilterAt(new BearerAuthzFilter(authenticationManager), BasicAuthenticationFilter.class)
-				//.addFilterAt(new BearerAuthzFilter(), BasicAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().cors()
                 .and().csrf().disable().authorizeRequests()
                     .antMatchers(HttpMethod.GET, OAuth2ControllerInterface.OAUTH2_CONFIG).permitAll()
                     .antMatchers(HttpMethod.GET, OAuth2ControllerInterface.OAUTH2_ACCESS_TOKEN).permitAll()
-                    .anyRequest().authenticated();
+                    .anyRequest().authenticated()
+                .and().addFilter(new BearerAuthzFilter(authenticationManager(), idPService, objectMapper));
     }
 
     /**

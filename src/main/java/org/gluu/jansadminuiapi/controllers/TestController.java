@@ -1,12 +1,17 @@
 package org.gluu.jansadminuiapi.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.gluu.jansadminuiapi.SpringConfiguration;
+import org.gluu.jansadminuiapi.domain.ws.response.IntrospectionResponse;
 import org.pf4j.PluginManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class TestController implements TestControllerInterface {
 
     @Override
@@ -22,9 +27,13 @@ public class TestController implements TestControllerInterface {
 
         return "pong";
     }
-    
+
+    @Override
     public String testToken() {
-        System.out.println("test-token controller");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info("User \"{}\" is correctly authenticated with authorities {}", ((IntrospectionResponse)authentication.getPrincipal()).getUsername(), authentication.getAuthorities());
+
         return "success";
     }
 

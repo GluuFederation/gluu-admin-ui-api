@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 public interface TestControllerInterface {
 
-    @GetMapping("ping")
+    @GetMapping("/ping")
     String ping();
 
-    @PreAuthorize("hasAuthority('dummy')")
-    @GetMapping("test-token")
+    @PreAuthorize("hasAuthority('openid')")
+    @GetMapping("/test-token")
     String testToken();
-    
+
 }
