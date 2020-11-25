@@ -1,25 +1,24 @@
 package org.gluu.jansadminuiapi.controllers;
 
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.github.scribejava.core.oauth.OAuth20Service;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.gluu.jansadminuiapi.domain.types.config.OAuth2;
 import org.gluu.jansadminuiapi.domain.ws.response.OAuth2Config;
+import org.gluu.jansadminuiapi.domain.ws.response.TokenResponse;
 import org.gluu.jansadminuiapi.services.AppConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.gluu.jansadminuiapi.services.external.IdPService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class OAuth2Controller implements OAuth2ControllerInterface {
 
-    @Autowired
-    private AppConfiguration appConfiguration;
 
-    @Autowired
-    private OAuth20Service oAuth20Service;
+    private final AppConfiguration appConfiguration;
+    private final IdPService idPService;
 
     @Override
     public OAuth2Config getOAuth2Config() {
@@ -38,9 +37,9 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
     @Override
     public ResponseEntity getAccessToken(String code) {
         try {
-            OAuth2AccessToken oAuth2AccessToken = oAuth20Service.getAccessToken(code);
-            log.info("Access token gotten from IdP: {}", oAuth2AccessToken.getRawResponse());
-            return new ResponseEntity(oAuth2AccessToken.getAccessToken(), HttpStatus.OK);
+            TokenResponse tokenResponse = idPService.getAccessToken(code);
+            log.info("Access token gotten from IdP: {}", tokenResponse);
+            return new ResponseEntity(tokenResponse.getAccessToken(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Problems getting access token", e);
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.gluu.jansadminuiapi.domain.exceptions.RestCallException;
 import org.gluu.jansadminuiapi.domain.ws.response.IntrospectionResponse;
+import org.gluu.jansadminuiapi.domain.ws.response.TokenResponse;
 import org.gluu.jansadminuiapi.services.AppConfiguration;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,38 @@ public class IdPService {
         }
     }
 
+    /**
+     * Calls token endpoint from the Identity Provider and returns a valid Access Token.
+     */
+    public TokenResponse getAccessToken(String code) throws RestCallException, HttpClientErrorException {
+        try {
+            log.trace("Getting access token with code: {}", code);
+            final URI tokenUri = new URI(this.appConfiguration.getOauth2().getTokenEndpoint());
+            MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+            body.add("code", code);
+            body.add("grant_type", "authorization_code");
+            body.add("scope", this.appConfiguration.getOauth2().getScope());
+            body.add("redirect_uri", this.appConfiguration.getOauth2().getRedirectUrl());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.setBasicAuth(this.appConfiguration.getOauth2().getClientId(), this.appConfiguration.getOauth2().getClientSecret());
+
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(body, headers);
+
+            ResponseEntity<TokenResponse> response = idPClient.postForEntity(tokenUri, request, TokenResponse.class);
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            } else {
+                throw new RestCallException(response, "Problems processing token rest call: " + response.getStatusCode());
+            }
+        } catch (RestCallException | HttpClientErrorException exception) {
+            throw exception;
+        } catch (Exception e) {
+            log.error("Problems processing IdP token call", e);
+            return null;
+        }
+    }
 
 }

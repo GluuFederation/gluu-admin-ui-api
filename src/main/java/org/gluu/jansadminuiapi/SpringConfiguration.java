@@ -1,10 +1,7 @@
 package org.gluu.jansadminuiapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.oauth.OAuth20Service;
 import lombok.extern.slf4j.Slf4j;
-import org.gluu.jansadminuiapi.domain.types.config.IdPApi20;
 import org.gluu.jansadminuiapi.domain.types.config.OAuth2;
 import org.gluu.jansadminuiapi.services.AppConfiguration;
 import org.pf4j.spring.SpringPluginManager;
@@ -37,22 +34,6 @@ public class SpringConfiguration {
         String introspectionEndpoint = "https://ce-ob.gluu.org/oxauth/restv1/introspection";
 
         return new AppConfiguration(new OAuth2(authzBaseUrl, clientId, clientSecret, scope, redirectUrl, logoutUrl, tokenEndpoint, introspectionEndpoint));
-    }
-
-    /**
-     * Scribe-java service to be used to manage all authorization requests related to Loadster.
-     */
-    @Bean
-    public OAuth20Service oauth20LoadsterService(AppConfiguration appConfiguration) {
-        OAuth2 oAuth2 = appConfiguration.getOauth2();
-        log.info("Oauth configuration: {}", oAuth2);
-
-        return new ServiceBuilder(oAuth2.getClientId())
-                .apiSecret(oAuth2.getClientSecret())
-                .defaultScope(oAuth2.getScope())
-                .responseType("code")
-                .callback(oAuth2.getRedirectUrl())
-                .build(new IdPApi20(oAuth2.getTokenEndpoint(), oAuth2.getAuthzBaseUrl()));
     }
 
     @Bean
