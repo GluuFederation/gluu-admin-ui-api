@@ -24,14 +24,14 @@ public class SpringConfiguration {
     @Bean
     public AppConfiguration appConfiguration() {
         // TODO Load configuration from the DB.
-        String clientId = "1001.70aa88c0-cf99-4f81-b963-9c2ca59cdd5c";
-        String clientSecret = "hJtZ4h36fTUe";
-        String authzBaseUrl = "https://ce-ob.gluu.org/oxauth/authorize.htm";
+        String clientId = "1001.7f0a05b2-0976-475f-8048-50d4cc5e845f";
+        String clientSecret = "OwhdfMI0Pz7W";
+        String authzBaseUrl = "https://gasmyr.gluu.org/jans-auth/authorize.htm";
         String scope = "openid+profile+email+user_name";
-        String redirectUrl = "https://ce-ob.gluu.org/admin-ui";
-        String logoutUrl = "https://ce-ob.gluu.org/admin-ui";
-        String tokenEndpoint = "https://ce-ob.gluu.org/oxauth/restv1/token";
-        String introspectionEndpoint = "https://ce-ob.gluu.org/oxauth/restv1/introspection";
+        String redirectUrl = "http://localhost:4100/";
+        String logoutUrl = "https://gasmyr.gluu.org/identity/finishlogout.htm";
+        String tokenEndpoint = "https://gasmyr.gluu.org/jans-auth/restv1/token";
+        String introspectionEndpoint = "https://gasmyr.gluu.org/jans-auth/restv1/introspection";
 
         return new AppConfiguration(new OAuth2(authzBaseUrl, clientId, clientSecret, scope, redirectUrl, logoutUrl, tokenEndpoint, introspectionEndpoint));
     }
