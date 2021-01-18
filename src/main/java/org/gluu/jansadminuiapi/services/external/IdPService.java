@@ -124,7 +124,7 @@ public class IdPService {
             } else {
                 body.add("grant_type", "client_credentials");
             }
-            if (!tokenRequest.getScope().isEmpty()) {
+            if (tokenRequest.getScope() != null && !tokenRequest.getScope().isEmpty()) {
                 body.add("scope", scopeAsString(tokenRequest.getScope()));
             }
             if (Strings.isNotBlank(tokenRequest.getRedirectUri())) {
