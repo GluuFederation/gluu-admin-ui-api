@@ -46,4 +46,16 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
         }
     }
 
+    //@Override
+    public ResponseEntity getApiToken(String code) {
+        try {
+            TokenResponse tokenResponse = idPService.getAccessToken(code);
+            log.info("Access token gotten from IdP: {}", tokenResponse);
+            return new ResponseEntity(tokenResponse.getAccessToken(), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Problems getting access token", e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
