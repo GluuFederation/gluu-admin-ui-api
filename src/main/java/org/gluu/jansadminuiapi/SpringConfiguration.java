@@ -24,12 +24,12 @@ public class SpringConfiguration {
     @Bean
     public AppConfiguration appConfiguration() {
         // TODO Load configuration from the DB.
-        String clientId = "1001.7f0a05b2-0976-475f-8048-50d4cc5e845f";
-        String clientSecret = "OwhdfMI0Pz7W";
+        String clientId = "1801.a0beec01-617b-4607-8a35-3e46ac43deb5";
+        String clientSecret = "bGnCdaFdn11b";
         String authzBaseUrl = "https://gasmyr.gluu.org/jans-auth/authorize.htm";
         String scope = "openid+profile+email+user_name";
         String redirectUrl = "http://localhost:4100/";
-        String logoutUrl = "https://gasmyr.gluu.org/identity/finishlogout.htm";
+        String logoutUrl = "http://localhost:4100/logout.htm";
         String tokenEndpoint = "https://gasmyr.gluu.org/jans-auth/restv1/token";
         String introspectionEndpoint = "https://gasmyr.gluu.org/jans-auth/restv1/introspection";
 
