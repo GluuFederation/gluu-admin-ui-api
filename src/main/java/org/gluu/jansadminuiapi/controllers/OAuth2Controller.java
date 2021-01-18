@@ -3,6 +3,7 @@ package org.gluu.jansadminuiapi.controllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.gluu.jansadminuiapi.domain.types.config.OAuth2;
+import org.gluu.jansadminuiapi.domain.ws.request.TokenRequest;
 import org.gluu.jansadminuiapi.domain.ws.response.OAuth2Config;
 import org.gluu.jansadminuiapi.domain.ws.response.TokenResponse;
 import org.gluu.jansadminuiapi.services.AppConfiguration;
@@ -46,11 +47,11 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
         }
     }
 
-    //@Override
-    public ResponseEntity getApiToken(String code) {
+    @Override
+    public ResponseEntity getApiProtectionToken(TokenRequest tokenRequest) {
         try {
-            TokenResponse tokenResponse = idPService.getAccessToken(code);
-            log.info("Access token gotten from IdP: {}", tokenResponse);
+            TokenResponse tokenResponse = idPService.getToken(tokenRequest);
+            log.info("Api protection token gotten from IdP: {}", tokenResponse);
             return new ResponseEntity(tokenResponse.getAccessToken(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Problems getting access token", e);
