@@ -50,6 +50,7 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
     @Override
     public ResponseEntity getApiProtectionToken(TokenRequest tokenRequest) {
         try {
+            log.info("Api protection token request to IdP: {}", tokenRequest);
             TokenResponse tokenResponse = idPService.getToken(tokenRequest);
             log.info("Api protection token gotten from IdP: {}", tokenResponse);
             return new ResponseEntity(tokenResponse.getAccessToken(), HttpStatus.OK);
