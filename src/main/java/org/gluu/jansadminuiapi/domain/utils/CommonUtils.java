@@ -15,7 +15,7 @@ public class CommonUtils {
         if (list == null || list.isEmpty()) {
             return "";
         }
-        return encode(Joiner.on("+").join(list));
+        return encode(Joiner.on(" ").join(list));
     }
 
     public static String encode(String str) throws UnsupportedEncodingException {

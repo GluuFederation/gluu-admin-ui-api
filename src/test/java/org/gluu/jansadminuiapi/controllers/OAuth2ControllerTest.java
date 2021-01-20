@@ -3,6 +3,7 @@ package org.gluu.jansadminuiapi.controllers;
 import org.assertj.core.util.Lists;
 import org.gluu.jansadminuiapi.domain.ws.request.TokenRequest;
 import org.gluu.jansadminuiapi.domain.ws.response.OAuth2Config;
+import org.gluu.jansadminuiapi.domain.ws.response.TokenResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,10 +32,13 @@ public class OAuth2ControllerTest {
     @Test
     public void getApiProtectionToken() {
         TokenRequest tokenRequest = new TokenRequest();
-        tokenRequest.setScope(Lists.newArrayList("openid"));
+        tokenRequest.setScope(Lists.newArrayList("https://jans.io/oauth/config/openid/clients.readonly"));
 
-        assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/oauth2/api-protection-token",
+        TokenResponse token = this.restTemplate.postForObject("http://localhost:" + port + "/oauth2/api-protection-token",
                 tokenRequest,
-                String.class)).isNotNull();
+                TokenResponse.class);
+        assertThat(token).isNotNull();
+        assertThat(token.getAccessToken()).isNotNull();
+        assertThat(token.getScope()).isNotNull();
     }
 }
