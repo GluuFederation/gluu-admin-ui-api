@@ -146,7 +146,6 @@ public class IdPService {
 
     private static String scopeAsString(List<String> scopes) throws UnsupportedEncodingException {
         Set<String> scope = Sets.newHashSet();
-        scope.add("openid");
         scope.addAll(scopes);
         return CommonUtils.joinAndUrlEncode(scope);
     }
