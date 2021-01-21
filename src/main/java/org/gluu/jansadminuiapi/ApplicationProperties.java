@@ -24,6 +24,7 @@ public class ApplicationProperties {
         String logoutUrl;
         String tokenEndpoint;
         String introspectionEndpoint;
+        String userInfoEndpoint;
 
         public String getClientId() {
             return clientId;
@@ -87,6 +88,14 @@ public class ApplicationProperties {
 
         public void setIntrospectionEndpoint(String introspectionEndpoint) {
             this.introspectionEndpoint = introspectionEndpoint;
+        }
+
+        public String getUserInfoEndpoint() {
+            return userInfoEndpoint;
+        }
+
+        public void setUserInfoEndpoint(String userInfoEndpoint) {
+            this.userInfoEndpoint = userInfoEndpoint;
         }
     }
 }

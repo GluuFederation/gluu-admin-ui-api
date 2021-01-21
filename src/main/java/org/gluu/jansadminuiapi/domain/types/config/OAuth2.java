@@ -17,5 +17,6 @@ public class OAuth2 {
     private String logoutRedirectUrl;
     private String tokenEndpoint;
     private String introspectionEndpoint;
+    private String userInfoEndpoint;
 
 }

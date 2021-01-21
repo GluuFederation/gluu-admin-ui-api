@@ -1,5 +1,6 @@
 package org.gluu.jansadminuiapi.services.external;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,8 +9,10 @@ import org.gluu.jansadminuiapi.ApplicationProperties;
 import org.gluu.jansadminuiapi.domain.exceptions.RestCallException;
 import org.gluu.jansadminuiapi.domain.utils.CommonUtils;
 import org.gluu.jansadminuiapi.domain.ws.request.TokenRequest;
+import org.gluu.jansadminuiapi.domain.ws.request.UserInfoRequest;
 import org.gluu.jansadminuiapi.domain.ws.response.IntrospectionResponse;
 import org.gluu.jansadminuiapi.domain.ws.response.TokenResponse;
+import org.gluu.jansadminuiapi.domain.ws.response.UserInfoResponse;
 import org.gluu.jansadminuiapi.services.AppConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -71,6 +74,7 @@ public class IdPService {
             log.trace("Getting access token with code: {}", code);
             TokenRequest tokenRequest = new TokenRequest();
             tokenRequest.setCode(code);
+            tokenRequest.setGrantType("authorization_code");
             return getToken(tokenRequest);
 
         } catch (RestCallException | HttpClientErrorException exception) {
@@ -106,6 +110,54 @@ public class IdPService {
                 throw new RestCallException(response, "Problems processing token rest call: " + response.getStatusCode());
             }
         } catch (RestCallException | HttpClientErrorException exception) {
+            throw exception;
+        } catch (Exception e) {
+            log.error("Problems processing IdP token call", e);
+            return null;
+        }
+    }
+
+    /**
+     * Fetches user-info from authorization server .
+     */
+    public UserInfoResponse getUserInfo(UserInfoRequest userInfoRequest) {
+        try {
+            log.trace("Getting User-Info from auth-server: {}", userInfoRequest.getAccess_token());
+            final URI userInfoUri = new URI(this.appConfiguration.getOauth2().getUserInfoEndpoint());
+
+            String accessToken = Strings.isNotBlank(userInfoRequest.getAccess_token()) ? userInfoRequest.getAccess_token() : null;
+
+            if (Strings.isBlank(userInfoRequest.getCode()) && Strings.isBlank(accessToken)) {
+                log.error("Bad Request: Either `code` or `access_token` is required.");
+                throw new Exception("Bad Request: Either `code` or `access_token` is required.");
+            }
+
+            if (Strings.isNotBlank(userInfoRequest.getCode()) && Strings.isBlank(accessToken)) {
+                TokenResponse tokenResponse = getAccessToken(userInfoRequest.getCode());
+                accessToken = tokenResponse.getAccessToken();
+            }
+
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.setBearerAuth(accessToken);
+
+            MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+            body.set("access_token", accessToken);
+
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+
+            ResponseEntity<JsonNode> response = idPClient.postForEntity(userInfoUri, request, JsonNode.class);
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                UserInfoResponse userInfoResponse = new UserInfoResponse();
+                userInfoResponse.setClaims(response.getBody());
+                userInfoResponse.setAccessToken(accessToken);
+                return userInfoResponse;
+            } else {
+                throw new RestCallException(response, "Problems processing user-info rest call: " + response.getStatusCode());
+            }
+        } catch (HttpClientErrorException exception) {
             throw exception;
         } catch (Exception e) {
             log.error("Problems processing IdP token call", e);
@@ -149,5 +201,4 @@ public class IdPService {
         scope.addAll(scopes);
         return CommonUtils.joinAndUrlEncode(scope);
     }
-
 }

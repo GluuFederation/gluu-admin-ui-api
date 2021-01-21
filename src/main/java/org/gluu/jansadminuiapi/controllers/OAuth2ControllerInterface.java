@@ -1,6 +1,7 @@
 package org.gluu.jansadminuiapi.controllers;
 
 import org.gluu.jansadminuiapi.domain.ws.request.TokenRequest;
+import org.gluu.jansadminuiapi.domain.ws.request.UserInfoRequest;
 import org.gluu.jansadminuiapi.domain.ws.response.OAuth2Config;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public interface OAuth2ControllerInterface {
     String OAUTH2_CONFIG = "/oauth2/config";
     String OAUTH2_ACCESS_TOKEN = "/oauth2/access-token";
     String OAUTH2_API_PROTECTION_TOKEN = "/oauth2/api-protection-token";
+    String OAUTH2_API_USER_INFO = "/oauth2/user-info";
 
     @GetMapping(OAUTH2_CONFIG)
     OAuth2Config getOAuth2Config();
@@ -25,5 +27,8 @@ public interface OAuth2ControllerInterface {
 
     @PostMapping(OAUTH2_API_PROTECTION_TOKEN)
     ResponseEntity getApiProtectionToken(@RequestBody TokenRequest tokenRequest);
+
+    @PostMapping(OAUTH2_API_USER_INFO)
+    ResponseEntity getUserInfo(@RequestBody UserInfoRequest userInfoRequest);
 
 }

@@ -36,7 +36,8 @@ public class SpringConfiguration {
                 applicationProperties.getAuthServer().getRedirectUrl(),
                 applicationProperties.getAuthServer().getLogoutUrl(),
                 applicationProperties.getAuthServer().getTokenEndpoint(),
-                applicationProperties.getAuthServer().getIntrospectionEndpoint()
+                applicationProperties.getAuthServer().getIntrospectionEndpoint(),
+                applicationProperties.getAuthServer().getUserInfoEndpoint()
         ));
     }
 
