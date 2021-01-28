@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable().authorizeRequests()
                     .antMatchers(HttpMethod.GET, OAuth2ControllerInterface.OAUTH2_CONFIG).permitAll()
                     .antMatchers(HttpMethod.GET, OAuth2ControllerInterface.OAUTH2_ACCESS_TOKEN).permitAll()
-                    .antMatchers(HttpMethod.POST, OAuth2ControllerInterface.OAUTH2_API_PROTECTION_TOKEN).permitAll()
+                    .antMatchers(HttpMethod.GET, OAuth2ControllerInterface.OAUTH2_API_PROTECTION_TOKEN).permitAll()
                     .antMatchers(HttpMethod.POST, OAuth2ControllerInterface.OAUTH2_API_USER_INFO).permitAll()
                     .anyRequest().authenticated()
                 .and().addFilter(new BearerAuthzFilter(authenticationManager(), idPService, objectMapper));

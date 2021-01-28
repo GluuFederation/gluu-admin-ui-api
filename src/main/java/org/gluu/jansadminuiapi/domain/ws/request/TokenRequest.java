@@ -29,5 +29,6 @@ public class TokenRequest {
     private String claimTokenFormat;
     private String pct;
     private String rpt;
-
+    private String tokenEndpoint;
+    private String userInfoJwt;
 }

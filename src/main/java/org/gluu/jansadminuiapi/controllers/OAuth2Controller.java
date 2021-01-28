@@ -13,6 +13,7 @@ import org.gluu.jansadminuiapi.services.external.IdPService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,6 +42,7 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
     @Override
     public ResponseEntity getAccessToken(String code) {
         try {
+            log.info("Access token request to IdP.");
             TokenResponse tokenResponse = idPService.getAccessToken(code);
             log.info("Access token gotten from IdP: {}", tokenResponse.toString());
             return new ResponseEntity(tokenResponse, HttpStatus.OK);
@@ -64,10 +66,10 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
     }
 
     @Override
-    public ResponseEntity getApiProtectionToken(TokenRequest tokenRequest) {
+    public ResponseEntity getApiProtectionToken(String ujwt) {
         try {
-            log.info("Api protection token request to IdP: {}", tokenRequest.toString());
-            TokenResponse tokenResponse = idPService.getToken(tokenRequest);
+            log.info("Api protection token request to IdP.");
+            TokenResponse tokenResponse = idPService.getApiProtectionToken(ujwt);
             log.info("Api protection token gotten from IdP: {}", tokenResponse.toString());
             return new ResponseEntity(tokenResponse, HttpStatus.OK);
         } catch (Exception e) {

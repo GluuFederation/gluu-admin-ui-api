@@ -25,8 +25,8 @@ public interface OAuth2ControllerInterface {
     @GetMapping(OAUTH2_ACCESS_TOKEN)
     ResponseEntity getAccessToken(@RequestParam String code);
 
-    @PostMapping(OAUTH2_API_PROTECTION_TOKEN)
-    ResponseEntity getApiProtectionToken(@RequestBody TokenRequest tokenRequest);
+    @GetMapping(OAUTH2_API_PROTECTION_TOKEN)
+    ResponseEntity getApiProtectionToken(@RequestParam String ujwt);
 
     @PostMapping(OAUTH2_API_USER_INFO)
     ResponseEntity getUserInfo(@RequestBody UserInfoRequest userInfoRequest);

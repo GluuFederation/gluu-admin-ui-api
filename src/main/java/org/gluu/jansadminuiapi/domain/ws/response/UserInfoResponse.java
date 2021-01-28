@@ -1,12 +1,13 @@
 package org.gluu.jansadminuiapi.domain.ws.response;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
+
+import java.util.Map;
 
 @Data
 public class UserInfoResponse {
-    private JsonNode claims;
-
+    private Map<String, Object> claims;
+    private String jwtUserInfo;
     private String accessToken;
 
 }
