@@ -1,9 +1,13 @@
 package org.gluu.jansadminuiapi.domain.ws.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TokenResponse {
 
     @JsonProperty("access_token")
@@ -18,8 +22,7 @@ public class TokenResponse {
     @JsonProperty("refresh_token")
     private String refreshToken;
 
-    @JsonProperty("scope")
-    private String scope;
+    private List<String> scopes;
 
     @JsonProperty("id_token")
     private String idToken;

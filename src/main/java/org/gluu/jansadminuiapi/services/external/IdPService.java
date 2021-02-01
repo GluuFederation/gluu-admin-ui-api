@@ -112,7 +112,15 @@ public class IdPService {
             tokenRequest.setTokenEndpoint(this.applicationProperties.getTokenServer().getTokenEndpoint());
             tokenRequest.setRedirectUri(this.applicationProperties.getTokenServer().getRedirectUrl());
             tokenRequest.setUserInfoJwt(userInfoJwt);
-            return getToken(tokenRequest);
+            TokenResponse tokenResponse = getToken(tokenRequest);
+
+            final Jwt tokenJwt = Jwt.parse(tokenResponse.getAccessToken());
+            Map<String, Object> claims = getClaims(tokenJwt);
+            if (claims.get("scope") != null && claims.get("scope") instanceof List) {
+                tokenResponse.setScopes((List) claims.get("scope"));
+            }
+
+            return tokenResponse;
 
         } catch (RestCallException | HttpClientErrorException exception) {
             throw exception;
@@ -185,9 +193,9 @@ public class IdPService {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 final Jwt jwtUserInfo = Jwt.parse(response.getBody());
-                UserInfoResponse userInfoResponse = setClaims(jwtUserInfo);
+                UserInfoResponse userInfoResponse = new UserInfoResponse();
+                userInfoResponse.setClaims(getClaims(jwtUserInfo));
                 userInfoResponse.setJwtUserInfo(response.getBody());
-                userInfoResponse.setAccessToken(accessToken);
                 return userInfoResponse;
             } else {
                 throw new RestCallException(response, "Problems processing user-info rest call: " + response.getStatusCode());
@@ -200,9 +208,11 @@ public class IdPService {
         }
     }
 
-    private UserInfoResponse setClaims(Jwt jwtUserInfo) {
-        UserInfoResponse userInfoResponse = new UserInfoResponse();
-        JwtClaims jwtClaims = jwtUserInfo.getClaims();
+    private Map<String, Object> getClaims(Jwt jwtObj) {
+        if (jwtObj == null) {
+            return null;
+        }
+        JwtClaims jwtClaims = jwtObj.getClaims();
         Map<String, Object> claims = Maps.newHashMap();
         Set<String> keys = jwtClaims.keys();
         keys.forEach((key) -> {
@@ -216,9 +226,7 @@ public class IdPService {
             } else if (jwtClaims.getClaim(key) instanceof JSONObject)
                 claims.put(key, ((JSONObject) jwtClaims.getClaim(key)));
         });
-
-        userInfoResponse.setClaims(claims);
-        return userInfoResponse;
+        return claims;
     }
 
     private MultiValueMap<String, String> createRequestBody(TokenRequest tokenRequest) throws Exception {

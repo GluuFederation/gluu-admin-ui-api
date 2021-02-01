@@ -8,6 +8,4 @@ import java.util.Map;
 public class UserInfoResponse {
     private Map<String, Object> claims;
     private String jwtUserInfo;
-    private String accessToken;
-
 }
