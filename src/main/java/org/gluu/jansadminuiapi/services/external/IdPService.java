@@ -120,6 +120,14 @@ public class IdPService {
                 tokenResponse.setScopes((List) claims.get("scope"));
             }
 
+            if (claims.get("iat") != null) {
+                tokenResponse.setIat(Long.valueOf(claims.get("iat").toString()));
+            }
+
+            if (claims.get("exp") != null) {
+                tokenResponse.setExp(Long.valueOf(claims.get("exp").toString()));
+            }
+
             return tokenResponse;
 
         } catch (RestCallException | HttpClientErrorException exception) {
@@ -219,6 +227,10 @@ public class IdPService {
 
             if (jwtClaims.getClaim(key) instanceof String)
                 claims.put(key, jwtClaims.getClaim(key).toString());
+            if (jwtClaims.getClaim(key) instanceof Integer)
+                claims.put(key, Integer.valueOf(jwtClaims.getClaim(key).toString()));
+            if (jwtClaims.getClaim(key) instanceof Long)
+                claims.put(key, Long.valueOf(jwtClaims.getClaim(key).toString()));
 
             else if (jwtClaims.getClaim(key) instanceof JSONArray) {
                 List<String> sourceArr = jwtClaims.getClaimAsStringList(key);

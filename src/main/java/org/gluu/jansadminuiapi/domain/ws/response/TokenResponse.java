@@ -24,6 +24,10 @@ public class TokenResponse {
 
     private List<String> scopes;
 
+    private long iat;
+
+    private long exp;
+
     @JsonProperty("id_token")
     private String idToken;
 
