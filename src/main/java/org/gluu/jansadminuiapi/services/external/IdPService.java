@@ -128,6 +128,10 @@ public class IdPService {
                 tokenResponse.setExp(Long.valueOf(claims.get("exp").toString()));
             }
 
+            if (claims.get("iss") != null) {
+                tokenResponse.setIssuer(claims.get("iss").toString());
+            }
+
             return tokenResponse;
 
         } catch (RestCallException | HttpClientErrorException exception) {

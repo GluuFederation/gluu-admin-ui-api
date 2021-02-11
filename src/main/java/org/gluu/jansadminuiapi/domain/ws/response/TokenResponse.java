@@ -28,6 +28,8 @@ public class TokenResponse {
 
     private long exp;
 
+    private String issuer;
+
     @JsonProperty("id_token")
     private String idToken;
 
