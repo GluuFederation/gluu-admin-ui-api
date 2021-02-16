@@ -23,12 +23,12 @@ public interface OAuth2ControllerInterface {
     OAuth2Config getOAuth2Config();
 
     @GetMapping(OAUTH2_ACCESS_TOKEN)
-    ResponseEntity getAccessToken(@RequestParam String code);
+    ResponseEntity getAccessToken(@RequestParam String code) throws Exception;
 
     @GetMapping(OAUTH2_API_PROTECTION_TOKEN)
-    ResponseEntity getApiProtectionToken(@RequestParam String ujwt);
+    ResponseEntity getApiProtectionToken(@RequestParam String ujwt) throws Exception;
 
     @PostMapping(OAUTH2_API_USER_INFO)
-    ResponseEntity getUserInfo(@RequestBody UserInfoRequest userInfoRequest);
+    ResponseEntity getUserInfo(@RequestBody UserInfoRequest userInfoRequest) throws Exception;
 
 }

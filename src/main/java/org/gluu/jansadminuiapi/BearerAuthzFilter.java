@@ -62,7 +62,7 @@ public class BearerAuthzFilter extends BasicAuthenticationFilter {
         }
     }
 
-	private UsernamePasswordAuthenticationToken getAuthentication(String token) throws RestCallException, HttpClientErrorException {
+	private UsernamePasswordAuthenticationToken getAuthentication(String token) throws Exception {
         IntrospectionResponse response = idPService.introspection(token);
         if (response != null) {
             List<SimpleGrantedAuthority> authorities = response.getScope().stream()

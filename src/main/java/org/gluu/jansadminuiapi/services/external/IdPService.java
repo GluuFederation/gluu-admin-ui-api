@@ -47,9 +47,9 @@ public class IdPService {
     /**
      * Calls introspection endpoint from the Identity Provider and returns all fields gotten.
      */
-    public IntrospectionResponse introspection(String token) throws RestCallException, HttpClientErrorException {
+    public IntrospectionResponse introspection(String token) throws Exception {
         try {
-            log.trace("Processing token instrospection: {}", token);
+            log.info("Processing token instrospection: {}", token);
             final URI introspectionUri = new URI(this.appConfiguration.getOauth2().getIntrospectionEndpoint());
             MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
             body.add("token", token);
@@ -71,16 +71,16 @@ public class IdPService {
             throw exception;
         } catch (Exception e) {
             log.error("Problems processing IdP introspection call", e);
-            return null;
+            throw e;
         }
     }
 
     /**
      * Calls token endpoint from the Identity Provider and returns a valid Access Token.
      */
-    public TokenResponse getAccessToken(String code) throws RestCallException, HttpClientErrorException {
+    public TokenResponse getAccessToken(String code) throws Exception {
         try {
-            log.trace("Getting access token with code: {}", code);
+            log.info("Getting access token with code: {}", code);
             TokenRequest tokenRequest = new TokenRequest();
             tokenRequest.setCode(code);
             tokenRequest.setGrantType("authorization_code");
@@ -91,20 +91,18 @@ public class IdPService {
             tokenRequest.setScope(Lists.newArrayList(this.appConfiguration.getOauth2().getScope().split("\\+")));
             return getToken(tokenRequest);
 
-        } catch (RestCallException | HttpClientErrorException exception) {
-            throw exception;
         } catch (Exception e) {
             log.error("Problems processing IdP token call", e);
-            return null;
+            throw e;
         }
     }
 
     /**
      * Calls token endpoint from the Identity Provider and returns a valid Access Token.
      */
-    public TokenResponse getApiProtectionToken(String userInfoJwt) throws RestCallException, HttpClientErrorException {
+    public TokenResponse getApiProtectionToken(String userInfoJwt) throws Exception {
         try {
-            log.trace("Getting access token with userInfoJwt: {}", userInfoJwt);
+            log.info("Getting access token with userInfoJwt: {}", userInfoJwt);
             TokenRequest tokenRequest = new TokenRequest();
             tokenRequest.setGrantType("client_credentials");
             tokenRequest.setClientId(this.applicationProperties.getTokenServer().getClientId());
@@ -138,14 +136,14 @@ public class IdPService {
             throw exception;
         } catch (Exception e) {
             log.error("Problems processing IdP token call", e);
-            return null;
+            throw e;
         }
     }
 
     /**
      * Calls token endpoint from the Identity Provider and returns a valid Token.
      */
-    public TokenResponse getToken(TokenRequest tokenRequest) throws RestCallException, HttpClientErrorException {
+    public TokenResponse getToken(TokenRequest tokenRequest) throws Exception {
         try {
             MultiValueMap<String, String> body = createRequestBody(tokenRequest);
             final URI tokenUri = new URI(tokenRequest.getTokenEndpoint());
@@ -167,16 +165,16 @@ public class IdPService {
             throw exception;
         } catch (Exception e) {
             log.error("Problems processing IdP token call", e);
-            return null;
+            throw e;
         }
     }
 
     /**
      * Fetches user-info from authorization server .
      */
-    public UserInfoResponse getUserInfo(UserInfoRequest userInfoRequest) {
+    public UserInfoResponse getUserInfo(UserInfoRequest userInfoRequest) throws Exception {
         try {
-            log.trace("Getting User-Info from auth-server: {}", userInfoRequest.getAccess_token());
+            log.info("Getting User-Info from auth-server: {}", userInfoRequest.getAccess_token());
             final URI userInfoUri = new URI(this.appConfiguration.getOauth2().getUserInfoEndpoint());
 
             String accessToken = Strings.isNotBlank(userInfoRequest.getAccess_token()) ? userInfoRequest.getAccess_token() : null;
@@ -212,11 +210,11 @@ public class IdPService {
             } else {
                 throw new RestCallException(response, "Problems processing user-info rest call: " + response.getStatusCode());
             }
-        } catch (HttpClientErrorException exception) {
+        } catch (RestCallException | HttpClientErrorException exception) {
             throw exception;
         } catch (Exception e) {
             log.error("Problems processing IdP token call", e);
-            return null;
+            throw e;
         }
     }
 
@@ -235,6 +233,8 @@ public class IdPService {
                 claims.put(key, Integer.valueOf(jwtClaims.getClaim(key).toString()));
             if (jwtClaims.getClaim(key) instanceof Long)
                 claims.put(key, Long.valueOf(jwtClaims.getClaim(key).toString()));
+            if (jwtClaims.getClaim(key) instanceof Boolean)
+                claims.put(key, Boolean.valueOf(jwtClaims.getClaim(key).toString()));
 
             else if (jwtClaims.getClaim(key) instanceof JSONArray) {
                 List<String> sourceArr = jwtClaims.getClaimAsStringList(key);
@@ -245,7 +245,7 @@ public class IdPService {
         return claims;
     }
 
-    private MultiValueMap<String, String> createRequestBody(TokenRequest tokenRequest) throws Exception {
+    private MultiValueMap<String, String> createRequestBody(TokenRequest tokenRequest) {
         try {
             MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
             if (Strings.isNotBlank(tokenRequest.getCode())) {

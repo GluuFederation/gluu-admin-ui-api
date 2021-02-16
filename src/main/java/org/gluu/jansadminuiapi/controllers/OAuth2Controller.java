@@ -3,7 +3,6 @@ package org.gluu.jansadminuiapi.controllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.gluu.jansadminuiapi.domain.types.config.OAuth2;
-import org.gluu.jansadminuiapi.domain.ws.request.TokenRequest;
 import org.gluu.jansadminuiapi.domain.ws.request.UserInfoRequest;
 import org.gluu.jansadminuiapi.domain.ws.response.OAuth2Config;
 import org.gluu.jansadminuiapi.domain.ws.response.TokenResponse;
@@ -12,8 +11,6 @@ import org.gluu.jansadminuiapi.services.AppConfiguration;
 import org.gluu.jansadminuiapi.services.external.IdPService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -40,7 +37,7 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
     }
 
     @Override
-    public ResponseEntity getAccessToken(String code) {
+    public ResponseEntity getAccessToken(String code) throws Exception {
         try {
             log.info("Access token request to IdP.");
             TokenResponse tokenResponse = idPService.getAccessToken(code);
@@ -48,12 +45,12 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
             return new ResponseEntity(tokenResponse, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Problems getting access token", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw e;
         }
     }
 
     @Override
-    public ResponseEntity getUserInfo(UserInfoRequest userInfoRequest) {
+    public ResponseEntity getUserInfo(UserInfoRequest userInfoRequest) throws Exception {
         try {
             log.info("Get User-Info request to IdP: {}", userInfoRequest.toString());
             UserInfoResponse userInfoResponse = idPService.getUserInfo(userInfoRequest);
@@ -61,12 +58,12 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
             return new ResponseEntity(userInfoResponse, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Problems getting access token", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw e;
         }
     }
 
     @Override
-    public ResponseEntity getApiProtectionToken(String ujwt) {
+    public ResponseEntity getApiProtectionToken(String ujwt) throws Exception {
         try {
             log.info("Api protection token request to IdP.");
             TokenResponse tokenResponse = idPService.getApiProtectionToken(ujwt);
@@ -74,7 +71,7 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
             return new ResponseEntity(tokenResponse, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Problems getting access token", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw e;
         }
     }
 
