@@ -6,8 +6,11 @@ import org.pf4j.PluginWrapper;
 
 public class HealthCheckPlugin extends SpringBootPlugin {
 
+    public static HealthCheckPlugin INSTANCE;
+
     public HealthCheckPlugin(PluginWrapper wrapper) {
         super(wrapper);
+        INSTANCE = this;
     }
 
     @Override
