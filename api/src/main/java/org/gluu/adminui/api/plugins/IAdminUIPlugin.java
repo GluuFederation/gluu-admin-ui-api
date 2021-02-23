@@ -1,4 +1,4 @@
-package org.gluu.adminui.app.plugins;
+package org.gluu.adminui.api.plugins;
 
 import org.pf4j.ExtensionPoint;
 

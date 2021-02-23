@@ -1,9 +1,9 @@
 package org.gluu.adminui.app.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.gluu.adminui.api.plugins.IAdminUIPlugin;
 import org.gluu.adminui.app.SpringConfiguration;
 import org.gluu.adminui.app.domain.ws.response.IntrospectionResponse;
-import org.gluu.adminui.app.plugins.IAdminUIPlugin;
 import org.pf4j.PluginManager;
 import org.pf4j.PluginWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

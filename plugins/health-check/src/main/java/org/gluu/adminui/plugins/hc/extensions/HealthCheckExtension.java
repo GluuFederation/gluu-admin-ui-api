@@ -1,7 +1,7 @@
 package org.gluu.adminui.plugins.hc.extensions;
 
 import lombok.Data;
-import org.gluu.adminui.app.plugins.IAdminUIPlugin;
+import org.gluu.adminui.api.plugins.IAdminUIPlugin;
 import org.gluu.adminui.plugins.hc.HealthCheckPlugin;
 import org.pf4j.Extension;
 import org.pf4j.PluginWrapper;
