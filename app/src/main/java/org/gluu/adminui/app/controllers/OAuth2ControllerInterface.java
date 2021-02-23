@@ -15,7 +15,7 @@ public interface OAuth2ControllerInterface {
 
     String OAUTH2_CONFIG = "/oauth2/config";
     String OAUTH2_ACCESS_TOKEN = "/oauth2/access-token";
-    String OAUTH2_API_PROTECTION_TOKEN = "/oauth2/app-protection-token";
+    String OAUTH2_API_PROTECTION_TOKEN = "/oauth2/api-protection-token";
     String OAUTH2_API_USER_INFO = "/oauth2/user-info";
 
     @GetMapping(OAUTH2_CONFIG)
