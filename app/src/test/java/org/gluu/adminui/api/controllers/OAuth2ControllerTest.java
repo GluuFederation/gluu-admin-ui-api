@@ -2,12 +2,12 @@ package org.gluu.adminui.api.controllers;
 
 import org.assertj.core.util.Lists;
 import org.gluu.adminui.api.ApplicationProperties;
-import org.gluu.adminui.api.util.SeleniumTestUtils;
-import org.gluu.adminui.api.util.TestUtil;
 import org.gluu.adminui.api.domain.ws.request.UserInfoRequest;
 import org.gluu.adminui.api.domain.ws.response.OAuth2Config;
 import org.gluu.adminui.api.domain.ws.response.TokenResponse;
 import org.gluu.adminui.api.domain.ws.response.UserInfoResponse;
+import org.gluu.adminui.api.util.SeleniumTestUtils;
+import org.gluu.adminui.api.util.TestUtil;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
@@ -25,7 +25,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles = "test")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OAuth2ControllerTest {
 

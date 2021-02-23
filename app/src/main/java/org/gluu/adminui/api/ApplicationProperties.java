@@ -4,12 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
+
 @Data
 @Component
 @ConfigurationProperties
-@PropertySource("file:${admin-ui.home}/config/application.properties")
+@PropertySources({
+        @PropertySource("classpath:application-dev.properties"),
+        @PropertySource(value = "file:${admin-ui.home}/config/application.properties", ignoreResourceNotFound = true)
+})
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApplicationProperties {
