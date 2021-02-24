@@ -30,18 +30,19 @@ public class HealthCheckService {
         try {
             JsonNode authServerStatus = idPClient.getForObject(healthCheckUri, JsonNode.class);
 
-            System.out.println("authServerStatus.get(\"status\").toString():"+authServerStatus.get("status").toString());
             if (authServerStatus.get("status").toString().replaceAll("\"","").equals("running")) {
                 componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER.getValue(), true));
             }
-            System.out.println("authServerStatus.get(\"db_status\").toString():"+authServerStatus.get("db_status").toString());
+
             if (authServerStatus.get("db_status").toString().replaceAll("\"","").equals("online")) {
                 componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER_DB.getValue(), true));
             }
-            System.out.println("componentsList:"+componentsList);
+            log.info("Health check components: "+componentsList);
             return componentsList;
         } catch (Exception e) {
             log.error("Error in fetching status of Authorization Server: ", e);
+            componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER.getValue(), false));
+            componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER_DB.getValue(), false));
             return componentsList;
         }
     }
