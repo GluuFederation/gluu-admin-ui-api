@@ -24,25 +24,29 @@ public class HealthCheckService {
     @Value("${authServer.healthCheckUrl}")
     private String authServerHCUrl;
 
+    @Value("${authserver.host}")
+    private String authServerHost;
+
+
     public List<HealthCheck> authServerHealthCheck() throws URISyntaxException {
         final URI healthCheckUri = new URI(authServerHCUrl);
         List<HealthCheck> componentsList = new ArrayList<>();
         try {
             JsonNode authServerStatus = idPClient.getForObject(healthCheckUri, JsonNode.class);
 
-            if (authServerStatus.get("status").toString().replaceAll("\"","").equals("running")) {
-                componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER.getValue(), true));
+            if (authServerStatus.get("status").toString().replaceAll("\"", "").equals("running")) {
+                componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER.getValue(), authServerHost, true));
             }
 
-            if (authServerStatus.get("db_status").toString().replaceAll("\"","").equals("online")) {
-                componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER_DB.getValue(), true));
+            if (authServerStatus.get("db_status").toString().replaceAll("\"", "").equals("online")) {
+                componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER_DB.getValue(), authServerHost, true));
             }
-            log.info("Health check components: "+componentsList);
+            log.info("Health check components: " + componentsList);
             return componentsList;
         } catch (Exception e) {
             log.error("Error in fetching status of Authorization Server: ", e);
-            componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER.getValue(), false));
-            componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER_DB.getValue(), false));
+            componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER.getValue(), authServerHost, false));
+            componentsList.add(new HealthCheck(AUIComponents.AUTHORIZATION_SERVER_DB.getValue(), authServerHost, false));
             return componentsList;
         }
     }

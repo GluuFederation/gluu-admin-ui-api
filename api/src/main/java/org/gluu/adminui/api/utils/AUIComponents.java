@@ -1,8 +1,8 @@
 package org.gluu.adminui.api.utils;
 
 public enum AUIComponents {
-    AUTHORIZATION_SERVER("authorization_server"),
-    AUTHORIZATION_SERVER_DB("authorization_server_db");
+    AUTHORIZATION_SERVER("Authorization Server"),
+    AUTHORIZATION_SERVER_DB("Authorization Server DB");
 
     private final String value;
 

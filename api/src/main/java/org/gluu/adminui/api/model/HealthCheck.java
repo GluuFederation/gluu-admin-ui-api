@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class HealthCheck {
     private String component;
+    private String componentAddress;
     private Boolean status;
 }
