@@ -10,15 +10,22 @@ import org.pf4j.PluginWrapper;
 @Extension
 public class HealthCheckExtension implements IAdminUIPlugin {
 
+    private String pluginFontClass;
     private String title;
     private String key;
     private String path;
 
     public HealthCheckExtension() {
         PluginWrapper wrapper = HealthCheckPlugin.INSTANCE.getWrapper();
+        this.pluginFontClass = "fa fa-thermometer-half";
         this.title = "Health Check";
         this.key = wrapper.getPluginId();
         this.path = "/health-check";
+    }
+
+    @Override
+    public String pluginFontClass() {
+        return this.pluginFontClass;
     }
 
     @Override
