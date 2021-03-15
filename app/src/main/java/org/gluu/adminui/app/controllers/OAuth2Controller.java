@@ -32,6 +32,9 @@ public class OAuth2Controller implements OAuth2ControllerInterface {
         oAuth2Config.setScope(oAuth2.getScope());
         oAuth2Config.setResponseType("code");
         oAuth2Config.setAcrValues("simple_password_auth");
+        oAuth2Config.setFrontChannelLogoutUrl(oAuth2.getFrontChannelLogoutUrl());
+        oAuth2Config.setPostLogoutRedirectUri(oAuth2.getPostLogoutRedirectUri());
+        oAuth2Config.setEndSessionEndpoint(oAuth2.getEndSessionEndpoint());
 
         return oAuth2Config;
     }

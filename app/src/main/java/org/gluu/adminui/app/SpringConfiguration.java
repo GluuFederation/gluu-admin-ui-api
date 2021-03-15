@@ -28,10 +28,13 @@ public class SpringConfiguration {
                 applicationProperties.getAuthServer().getClientSecret(),
                 applicationProperties.getAuthServer().getScope(),
                 applicationProperties.getAuthServer().getRedirectUrl(),
-                applicationProperties.getAuthServer().getLogoutUrl(),
+                applicationProperties.getAuthServer().getFrontChannelLogoutUrl(),
+                applicationProperties.getAuthServer().getPostLogoutRedirectUri(),
                 applicationProperties.getAuthServer().getTokenEndpoint(),
                 applicationProperties.getAuthServer().getIntrospectionEndpoint(),
-                applicationProperties.getAuthServer().getUserInfoEndpoint()
+                applicationProperties.getAuthServer().getUserInfoEndpoint(),
+                applicationProperties.getAuthServer().getEndSessionEndpoint()
+
         ));
     }
 

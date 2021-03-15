@@ -15,5 +15,8 @@ public class OAuth2Config {
     private String scope;
     private String redirectUrl;
     private String acrValues;
+    private String frontChannelLogoutUrl;
+    private String postLogoutRedirectUri;
+    private String endSessionEndpoint;
 
 }

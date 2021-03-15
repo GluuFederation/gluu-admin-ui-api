@@ -31,10 +31,12 @@ public class ApplicationProperties {
         String authzBaseUrl;
         String scope;
         String redirectUrl;
-        String logoutUrl;
+        String frontChannelLogoutUrl;
+        String postLogoutRedirectUri;
         String tokenEndpoint;
         String introspectionEndpoint;
         String userInfoEndpoint;
+        String endSessionEndpoint;
     }
 
     @Data

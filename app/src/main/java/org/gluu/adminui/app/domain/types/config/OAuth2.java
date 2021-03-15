@@ -14,9 +14,11 @@ public class OAuth2 {
     private String clientSecret;
     private String scope;
     private String redirectUrl;
-    private String logoutRedirectUrl;
+    private String frontChannelLogoutUrl;
+    private String postLogoutRedirectUri;
     private String tokenEndpoint;
     private String introspectionEndpoint;
     private String userInfoEndpoint;
+    private String endSessionEndpoint;
 
 }
