@@ -133,7 +133,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>jans-admin-ui-api-${project.version}</finalName>
+        <finalName>gluu-admin-ui-api-${project.version}</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
