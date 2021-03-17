@@ -198,7 +198,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>../target/sandbox</outputDirectory>
+                            <outputDirectory>../target</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.build.directory}</directory>
