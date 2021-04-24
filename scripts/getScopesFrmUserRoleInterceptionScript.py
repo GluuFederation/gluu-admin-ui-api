@@ -49,12 +49,12 @@ class Introspection(IntrospectionType):
             # Parse jwt
             userInfoJwt = Jwt.parse(ujwt)
             # Get auth-server keys
-            url = URL("https://jans-ui.jans.io/jans-auth/restv1/jwks")
+            url = URL("https://bank-op.gluu.org/oxauth/restv1/jwks")
             conn = url.openConnection()
             conn.setDoOutput(True)
             conn.setRequestMethod("GET")
             conn.setRequestProperty("Content-type", "application/json")
-            if conn.getResponseCode() != 200:
+            if conn.getResponseCode() != 200: 
                 print "Failed!!"
                 print conn.getResponseCode()
                 print conn.getResponseMessage()
@@ -62,7 +62,7 @@ class Introspection(IntrospectionType):
                 print "Success!! Able to connect for auth-server jwks"
                 print conn.getResponseCode()
                 print conn.getResponseMessage()
-
+            
             instr = conn.getInputStream()
             instrreader = InputStreamReader(instr)
             breader = BufferedReader(instrreader)
@@ -75,12 +75,12 @@ class Introspection(IntrospectionType):
             # JWKS
             jwks = JSONObject(jsonResult)
             conn.disconnect()
-
+            
             # Validate JWT
             authCryptoProvider = OxAuthCryptoProvider()
             validJwt = authCryptoProvider.verifySignature(userInfoJwt.getSigningInput(), userInfoJwt.getEncodedSignature(), userInfoJwt.getHeader().getKeyId(), jwks, None, userInfoJwt.getHeader().getSignatureAlgorithm())
-            print validJwt
-
+            print validJwt       
+            
             if validJwt == True:
                 print "user-info jwt is valid"
                 # Get claims from parsed JWT
@@ -207,6 +207,6 @@ class Introspection(IntrospectionType):
                     scope.append("https://jans.io/oauth/jans-auth-server/config/properties.readonly")
             responseAsJsonObject.accumulate("scope", scope)
         except Exception as e:
-            print "Exception occured. Unable to resolve role/scope mapping."
-            print e
+                print "Exception occured. Unable to resolve role/scope mapping."
+                print e
         return True
