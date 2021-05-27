@@ -51,6 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, OAuth2ControllerInterface.OAUTH2_API_USER_INFO).permitAll()
                 .antMatchers(HttpMethod.GET, "/plugins/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/plugins/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/logging/audit").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilter(new BearerAuthzFilter(authenticationManager(), idPService, objectMapper));
     }
