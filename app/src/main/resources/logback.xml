@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="APPLICATION_LOG" value="./logs/admin-ui-backend.log"/>
-    <property name="AUDIT_LOG" value="./logs/admin-ui-audit.log"/>
+    <property name="APPLICATION_LOG" value="/var/log/admin-ui/api/admin-ui-backend.log"/>
+    <property name="AUDIT_LOG" value="/var/log/admin-ui/api/admin-ui-audit.log"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
