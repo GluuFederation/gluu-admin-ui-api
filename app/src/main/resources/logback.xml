@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="APPLICATION_LOG" value="/var/log/admin-ui/api/admin-ui-backend.log"/>
-    <property name="AUDIT_LOG" value="/var/log/admin-ui/api/admin-ui-audit.log"/>
+    <property name="LOG_PATH" value="/var/log/admin-ui/api"/>
+    <property name="APPLICATION_LOG" value="${LOG_PATH}/admin-ui-backend.log"/>
+    <property name="AUDIT_LOG" value="${LOG_PATH}/admin-ui-audit.log"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
@@ -16,7 +17,7 @@
         <file>${APPLICATION_LOG}</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>/var/log/admin-ui/api/archived/admin-ui-backend.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/archived/admin-ui-backend.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- each archived file, size max 10MB -->
             <maxFileSize>10MB</maxFileSize>
             <!-- total size of all archive files, if total size > 20GB,
@@ -35,7 +36,7 @@
         <file>${AUDIT_LOG}</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>/var/log/admin-ui/api/archived/admin-ui-audit.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/archived/admin-ui-audit.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- each archived file, size max 10MB -->
             <maxFileSize>10MB</maxFileSize>
             <!-- total size of all archive files, if total size > 20GB,
