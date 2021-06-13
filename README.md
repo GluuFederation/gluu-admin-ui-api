@@ -1,6 +1,6 @@
 # Gluu Admin UI API
 
-Backend apis of [Gluu Admin UI] (https://github.com/GluuFederation/gluu-admin-ui).
+Backend apis of [Gluu Admin UI](https://github.com/GluuFederation/gluu-admin-ui).
 
 ## Installation
 
