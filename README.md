@@ -16,8 +16,9 @@ To run the project locally execute following commands.
 
 ```
 git clone https://github.com/GluuFederation/gluu-admin-ui-api.git
+cd gluu-admin-ui-api
 mvn clean install -Dmaven.test.skip=true
-cd gluu-admin-ui-api\target
+cd gluu-admin-ui-api/target
 java -jar gluu-admin-ui-api-5.0.0-SNAPSHOT-standalone.jar
 ```
 
