@@ -38,11 +38,18 @@ public class LicenseController implements LicenseControllerInterface {
             if (currentLicense == null) {
 
                 log.info("currentLicense not found");
-                ActivationLicense keyBased = ActivationLicense.fromKey("GFXJ-AB8B-YDJK-L4AD");
-                License activated = licenseManager.activateLicense(keyBased);
-                log.info("currentLicense found :: "+ currentLicense.getProduct());
+                try {
+                    ActivationLicense keyBased = ActivationLicense.fromKey("GFXJ-AB8B-YDJK-L4AD");
+                    License license = licenseManager.activateLicense(keyBased);
+                    License activated = license;
+                    log.info("currentLicense found :: " + activated.getProduct());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    log.error("Error: ", ex);
+                }
+
             } else {
-                log.info("currentLicense found :: "+ currentLicense.getProduct());
+                log.info("currentLicense found :: " + currentLicense.getProduct());
             }
 
         } catch (LicenseSpringException e) {
