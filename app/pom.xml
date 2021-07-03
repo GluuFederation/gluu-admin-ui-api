@@ -131,6 +131,21 @@
             <version>2.20</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.licensespring</groupId>
+            <artifactId>licensespring-license-client</artifactId>
+            <version>2.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.5.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>gluu-admin-ui-api-${project.version}</finalName>

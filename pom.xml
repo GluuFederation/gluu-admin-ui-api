@@ -48,6 +48,10 @@
             <layout>default</layout>
             <url>https://repo1.maven.org/maven2</url>
         </repository>
+        <repository>
+            <id>jdk-java</id>
+            <url>https://licensespring-maven.s3.eu-central-1.amazonaws.com/</url>
+        </repository>
     </repositories>
     <dependencyManagement>
         <dependencies>

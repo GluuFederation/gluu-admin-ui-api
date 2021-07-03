@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 public class ApplicationProperties {
     private AuthServer authServer;
     private TokenServer tokenServer;
+    private LicenseSpring licenseSpring;
 
     @Data
     public static class AuthServer {
@@ -50,5 +51,12 @@ public class ApplicationProperties {
         String tokenEndpoint;
         String introspectionEndpoint;
         String userInfoEndpoint;
+    }
+
+    @Data
+    public static class LicenseSpring {
+        String apiKey;
+        String productCode;
+        String sharedKey;
     }
 }
