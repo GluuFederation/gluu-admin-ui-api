@@ -38,22 +38,14 @@ public class LicenseController implements LicenseControllerInterface {
             if (currentLicense == null) {
 
                 log.info("currentLicense not found");
-                try {
-                    ActivationLicense keyBased = ActivationLicense.fromKey("GFY7-AY7U-6VAK-L3AD");
-                    License license = licenseManager.activateLicense(keyBased);
-                    License activated = license;
-                    log.info("currentLicense found :: " + activated.getProduct());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    log.error("Error: ", ex);
-                }
-
+                return false;
             } else {
                 log.info("currentLicense found :: " + currentLicense.getProduct());
             }
 
         } catch (LicenseSpringException e) {
             log.error(e.getCause().getMessage());
+            return false;
         }
 
         return true;
@@ -62,6 +54,22 @@ public class LicenseController implements LicenseControllerInterface {
 
     @Override
     public Boolean activateLicense(String licenseKey) throws Exception {
-        return null;
+        LicenseSpringConfiguration configuration = LicenseSpringConfiguration.builder()
+                .apiKey(applicationProperties.getLicenseSpring().getApiKey())
+                .productCode(applicationProperties.getLicenseSpring().getProductCode())
+                .sharedKey(applicationProperties.getLicenseSpring().getSharedKey())
+                .build();
+
+        LicenseManager licenseManager = LicenseManager.getInstance();
+        try {
+            ActivationLicense keyBased = ActivationLicense.fromKey("GFXJ-AB8B-YDJK-L4AD");
+            License license = licenseManager.activateLicense(keyBased);
+            License activated = license;
+            log.info("currentLicense found :: " + activated.getProduct());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            log.error("Error: ", ex);
+        }
+        return true;
     }
 }
