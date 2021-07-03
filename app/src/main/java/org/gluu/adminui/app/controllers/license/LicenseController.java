@@ -39,7 +39,7 @@ public class LicenseController implements LicenseControllerInterface {
 
                 log.info("currentLicense not found");
                 try {
-                    ActivationLicense keyBased = ActivationLicense.fromKey("GFXJ-AB8B-YDJK-L4AD");
+                    ActivationLicense keyBased = ActivationLicense.fromKey("GFY7-AY7U-6VAK-L3AD");
                     License license = licenseManager.activateLicense(keyBased);
                     License activated = license;
                     log.info("currentLicense found :: " + activated.getProduct());
