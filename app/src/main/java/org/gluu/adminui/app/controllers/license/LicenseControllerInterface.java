@@ -1,8 +1,7 @@
 package org.gluu.adminui.app.controllers.license;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.gluu.adminui.app.domain.ws.request.LicenseRequest;
+import org.springframework.web.bind.annotation.*;
 
 public interface LicenseControllerInterface {
     String CHECK_LICENSE = "/license/checkLicense";
@@ -11,6 +10,6 @@ public interface LicenseControllerInterface {
     @GetMapping(CHECK_LICENSE)
     Boolean checkLicense();
 
-    @GetMapping(ACTIVATE_LICENSE)
-    Boolean activateLicense(@RequestParam String licenseKey) throws Exception;
+    @PostMapping(ACTIVATE_LICENSE)
+    Boolean activateLicense(@RequestBody LicenseRequest licenseRequest) throws Exception;
 }

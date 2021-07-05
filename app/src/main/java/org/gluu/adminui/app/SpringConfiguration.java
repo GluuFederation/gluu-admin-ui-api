@@ -2,6 +2,7 @@ package org.gluu.adminui.app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.gluu.adminui.app.domain.types.config.LicenseConfiguration;
 import org.gluu.adminui.app.domain.types.config.OAuth2;
 import org.gluu.adminui.app.services.AppConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,9 @@ public class SpringConfiguration {
                 applicationProperties.getAuthServer().getIntrospectionEndpoint(),
                 applicationProperties.getAuthServer().getUserInfoEndpoint(),
                 applicationProperties.getAuthServer().getEndSessionEndpoint()
-
-        ));
+        ), new LicenseConfiguration(applicationProperties.getLicenseSpring().getApiKey(),
+                applicationProperties.getLicenseSpring().getProductCode(),
+                applicationProperties.getLicenseSpring().getSharedKey()));
     }
 
     @Bean
