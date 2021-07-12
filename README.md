@@ -26,4 +26,4 @@ The application configuration can be modified at: https://github.com/GluuFederat
 
 Once the project is compiled and started, UI can be accessed at port 8080.
 
-http://localhost:8080/plugins/list
+For list of backend plugins: http://localhost:8080/plugins/list
