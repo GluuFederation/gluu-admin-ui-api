@@ -20,6 +20,10 @@ public class LicenseController implements LicenseControllerInterface {
     @Override
     public Boolean checkLicense() {
         try {
+            if(!appConfiguration.getLicenseConfiguration().isEnabled()) {
+                log.info("License configuration is disabled. ");
+                return true;
+            }
             License activeLicense = appConfiguration.getLicenseConfiguration().getLicenseManager().getCurrent();
             if (activeLicense == null) {
                 log.info("Active license for admin-ui not present ");
@@ -38,9 +42,10 @@ public class LicenseController implements LicenseControllerInterface {
     public Boolean activateLicense(LicenseRequest licenseRequest) throws Exception {
         LicenseManager licenseManager = appConfiguration.getLicenseConfiguration().getLicenseManager();
         try {
+            log.info("Trying to activate License.");
             ActivationLicense keyBased = ActivationLicense.fromKey(licenseRequest.getLicenseKey());
             License license = licenseManager.activateLicense(keyBased);
-            log.info("currentLicense found :: " + license.getProduct());
+            log.info("License activated :: " + license.getProduct());
             return true;
         } catch (LicenseSpringException e) {
             log.error("Error in activating license: ", e);

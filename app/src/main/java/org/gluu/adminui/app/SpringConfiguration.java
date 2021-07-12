@@ -37,7 +37,8 @@ public class SpringConfiguration {
                 applicationProperties.getAuthServer().getEndSessionEndpoint()
         ), new LicenseConfiguration(applicationProperties.getLicenseSpring().getApiKey(),
                 applicationProperties.getLicenseSpring().getProductCode(),
-                applicationProperties.getLicenseSpring().getSharedKey()));
+                applicationProperties.getLicenseSpring().getSharedKey(),
+                applicationProperties.getLicenseSpring().isEnabled()));
     }
 
     @Bean

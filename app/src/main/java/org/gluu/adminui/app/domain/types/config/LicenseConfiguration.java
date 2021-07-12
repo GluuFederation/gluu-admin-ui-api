@@ -14,14 +14,18 @@ public class LicenseConfiguration {
     String apiKey;
     String productCode;
     String sharedKey;
+    boolean isEnabled;
     LicenseSpringConfiguration licenseSpringConfiguration;
     LicenseManager licenseManager;
 
-    public LicenseConfiguration(String apiKey, String productCode, String sharedKey) {
+    public LicenseConfiguration(String apiKey, String productCode, String sharedKey, boolean isEnabled) {
         this.apiKey = apiKey;
         this.productCode = productCode;
         this.sharedKey = sharedKey;
-        initializeLicenseManager();
+        this.isEnabled = isEnabled;
+        if(this.isEnabled) {
+            initializeLicenseManager();
+        }
     }
 
     public void initializeLicenseManager() {
