@@ -38,7 +38,7 @@ public class SpringConfiguration {
         ), new LicenseConfiguration(applicationProperties.getLicenseSpring().getApiKey(),
                 applicationProperties.getLicenseSpring().getProductCode(),
                 applicationProperties.getLicenseSpring().getSharedKey(),
-                applicationProperties.getLicenseSpring().isEnabled()));
+                applicationProperties.getLicenseSpring().getEnabled()));
     }
 
     @Bean

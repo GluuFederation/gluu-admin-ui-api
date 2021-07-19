@@ -58,6 +58,6 @@ public class ApplicationProperties {
         String apiKey;
         String productCode;
         String sharedKey;
-        boolean isEnabled;
+        Boolean enabled = Boolean.FALSE;
     }
 }

@@ -20,7 +20,7 @@ public class LicenseController implements LicenseControllerInterface {
     @Override
     public Boolean checkLicense() {
         try {
-            if(!appConfiguration.getLicenseConfiguration().isEnabled()) {
+            if(!appConfiguration.getLicenseConfiguration().getEnabled()) {
                 log.info("License configuration is disabled. ");
                 return true;
             }
