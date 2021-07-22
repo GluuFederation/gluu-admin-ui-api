@@ -56,6 +56,9 @@ public class LicenseController implements LicenseControllerInterface {
         } catch (LicenseSpringException e) {
             log.error("Error in activating license: ", e);
             return false;
+        } catch (Exception e) {
+            log.error("Error in activating license: ", e);
+            return false;
         }
     }
 }
