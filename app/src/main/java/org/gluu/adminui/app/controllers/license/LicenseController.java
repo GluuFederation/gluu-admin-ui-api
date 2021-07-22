@@ -30,6 +30,12 @@ public class LicenseController implements LicenseControllerInterface {
                 return false;
             } else {
                 log.info("Active license for admin-ui found :: " + activeLicense.getProduct());
+                License updatedLicense = appConfiguration.getLicenseConfiguration()
+                        .getLicenseManager()
+                        .checkLicense(activeLicense);
+                if(updatedLicense == null) {
+                    return false;
+                }
                 return true;
             }
         } catch (LicenseSpringException e) {
@@ -51,6 +57,5 @@ public class LicenseController implements LicenseControllerInterface {
             log.error("Error in activating license: ", e);
             return false;
         }
-
     }
 }
