@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>health-check</module>
+        <module>hello-world</module>
     </modules>
 
     <build>

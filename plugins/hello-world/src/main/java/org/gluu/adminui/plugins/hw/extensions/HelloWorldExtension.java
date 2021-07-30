@@ -1,36 +1,28 @@
-package org.gluu.adminui.plugins.hc.extensions;
+package org.gluu.adminui.plugins.hw.extensions;
 
 import lombok.Data;
 import org.gluu.adminui.api.plugins.IAdminUIPlugin;
-import org.gluu.adminui.plugins.hc.HealthCheckPlugin;
+import org.gluu.adminui.plugins.hw.HelloWorldPlugin;
 import org.pf4j.Extension;
 import org.pf4j.PluginWrapper;
 
 @Data
 @Extension
-public class HealthCheckExtension implements IAdminUIPlugin {
+public class HelloWorldExtension implements IAdminUIPlugin {
 
-    private String icon;
     private String title;
     private String key;
     private String path;
 
-    public HealthCheckExtension() {
-        PluginWrapper wrapper = HealthCheckPlugin.INSTANCE.getWrapper();
-        this.icon = "fa-thermometer-half";
-        this.title = "Health Check";
+    public HelloWorldExtension() {
+        PluginWrapper wrapper = HelloWorldPlugin.INSTANCE.getWrapper();
+        this.title = "Hello World";
         this.key = wrapper.getPluginId();
-        this.path = "/health-check";
-    }
-
-    @Override
-    public String icon() {
-        return this.icon;
+        this.path = "/hello-world";
     }
 
     @Override
     public String title() {
-
         return this.title;
     }
 

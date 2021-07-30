@@ -1,4 +1,4 @@
-package org.gluu.adminui.plugins.hc;
+package org.gluu.adminui.plugins.hw;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.web.client.RestTemplateBuilder;
