@@ -1,17 +1,7 @@
 package org.gluu.adminui.plugins.hw.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.gluu.adminui.plugins.hw.modals.HelloWorldResponse;
 
-import java.net.URISyntaxException;
-
-@RestController
-@RequestMapping("/plugins")
-public class HelloWorldController {
-
-    @GetMapping("/hello-world")
-    public String helloWorld() throws URISyntaxException {
-        return "Hello Plugin!";
-    }
+public interface HelloWorldController {
+    public HelloWorldResponse helloWorld();
 }

@@ -1,0 +1,12 @@
+package org.gluu.adminui.plugins.hw.modals;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class HelloWorldResponse {
+    private String message;
+}
