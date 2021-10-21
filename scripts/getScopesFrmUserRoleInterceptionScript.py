@@ -104,6 +104,9 @@ class Introspection(IntrospectionType):
                     scope.append("https://jans.io/oauth/config/cache.readonly")
                     scope.append("https://jans.io/oauth/jans-auth-server/config/properties.readonly")
                     scope.append("https://jans.io/oauth/config/database/couchbase.readonly")
+                    scope.append("https://jans.io/oauth/config/database/sql.readonly")
+                    scope.append("https://jans.io/oauth/config/stats.readonly")
+                    scope.append("jans_stat")
                 elif jansAdminUIRole.getString(0) == 'api-editor':
                     scope.append("https://jans.io/oauth/config/attributes.readonly")
                     scope.append("https://jans.io/oauth/config/attributes.write")
@@ -131,7 +134,11 @@ class Introspection(IntrospectionType):
                     scope.append("https://jans.io/oauth/config/cache.write")
                     scope.append("https://jans.io/oauth/config/database/couchbase.readonly")
                     scope.append("https://jans.io/oauth/config/database/couchbase.write")
+                    scope.append("https://jans.io/oauth/config/database/sql.readonly")
+                    scope.append("https://jans.io/oauth/config/database/sql.write")
                     scope.append("https://jans.io/oauth/jans-auth-server/config/properties.readonly")
+                    scope.append("https://jans.io/oauth/config/stats.readonly")
+                    scope.append("jans_stat")
                 elif jansAdminUIRole.getString(0) == 'api-manager':
                     scope.append("https://jans.io/oauth/config/attributes.readonly")
                     scope.append("https://jans.io/oauth/config/attributes.write")
@@ -167,7 +174,11 @@ class Introspection(IntrospectionType):
                     scope.append("https://jans.io/oauth/config/cache.write")
                     scope.append("https://jans.io/oauth/config/database/couchbase.readonly")
                     scope.append("https://jans.io/oauth/config/database/couchbase.write")
+                    scope.append("https://jans.io/oauth/config/database/sql.readonly")
+                    scope.append("https://jans.io/oauth/config/database/sql.write")
                     scope.append("https://jans.io/oauth/jans-auth-server/config/properties.readonly")
+                    scope.append("https://jans.io/oauth/config/stats.readonly")
+                    scope.append("jans_stat")
                 elif jansAdminUIRole.getString(0) == 'api-admin':
                     scope.append("https://jans.io/oauth/config/attributes.readonly")
                     scope.append("https://jans.io/oauth/config/attributes.write")
@@ -203,8 +214,12 @@ class Introspection(IntrospectionType):
                     scope.append("https://jans.io/oauth/config/cache.write")
                     scope.append("https://jans.io/oauth/config/database/couchbase.readonly")
                     scope.append("https://jans.io/oauth/config/database/couchbase.write")
+                    scope.append("https://jans.io/oauth/config/database/sql.readonly")
+                    scope.append("https://jans.io/oauth/config/database/sql.write")
                     scope.append("https://jans.io/oauth/jans-auth-server/config/properties.write")
                     scope.append("https://jans.io/oauth/jans-auth-server/config/properties.readonly")
+                    scope.append("https://jans.io/oauth/config/stats.readonly")
+                    scope.append("jans_stat")
             responseAsJsonObject.accumulate("scope", scope)
         except Exception as e:
                 print "Exception occured. Unable to resolve role/scope mapping."
